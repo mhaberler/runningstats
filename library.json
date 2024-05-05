@@ -1,0 +1,18 @@
+{
+    "name": "runningstats",
+    "keywords": "statistics, esp32",
+    "description": "online algorithms for basic statistics and timing",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mhaberler/runningstats.git"
+    },
+    "authors": {
+        "name": "Michael Haberler",
+        "url": "https://github.com/mhaberler",
+        "maintainer": true
+    },
+    "version": "0.0.1",
+    "license": "MIT",
+    "frameworks": "arduino, esp-idf",
+    "platforms": "*"
+}
