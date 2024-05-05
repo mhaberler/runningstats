@@ -1,4 +1,4 @@
-# RunningStats
+# RunningStats, RunningRegression
 class encapsulating various online algorithms for basic statistics
 
 Source: https://www.johndcook.com/blog/skewness_kurtosis/
