@@ -28,14 +28,19 @@ class TimerStats : public RunningStats {
             _laptime = now;
         }
     }
+    
+    double StartTime() {
+        return _starttime;
+    }
+
     void Clear() {
         _laptime = 0;
         RunningStats::Clear();
     }
 
   private:
-    double _starttime;
-    double _laptime;
+    double _starttime = NAN;
+    double _laptime = NAN;
 };
 
 #endif
