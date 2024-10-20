@@ -3,14 +3,8 @@
 
 #include "RunningStats.hpp"
 #include "esp_timer.h"
+#include "fmicro.h"
 
-static inline double fmillis(void) {
-    return (double) (esp_timer_get_time() / 1000.0L);
-}
-
-static inline double  fmicros(void) {
-    return (double) esp_timer_get_time();
-}
 
 class TimerStats : public RunningStats {
   public:
@@ -18,18 +12,18 @@ class TimerStats : public RunningStats {
     // interval timing: accumulate stats for duration between
     // pairs of Start()/Stop() calls:
     void Start() {
-        _starttime = fmicros();
+        _starttime = dmicros();
     }
     void Stop() {
-        Push(fmicros() - _starttime);
+        Push(dmicros() - _starttime);
     }
 
     // or use as a lap timer: measure stats for time between Lap() calls
     void Lap() {
         if (_laptime == 0) {
-            _laptime = fmicros();
+            _laptime = dmicros();
         } else {
-            uint32_t now = fmicros();
+            uint32_t now = dmicros();
             Push(now - _laptime);
             _laptime = now;
         }
