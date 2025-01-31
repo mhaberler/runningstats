@@ -10,7 +10,7 @@ public:
   RunningRegression();
   void Clear();
   void Push(_float_t x, _float_t y);
-  long long NumDataValues() const;
+  _counter_t NumDataValues() const;
   _float_t Slope() const;
   _float_t Intercept() const;
   _float_t Correlation() const;
@@ -23,7 +23,7 @@ private:
   RunningStats x_stats;
   RunningStats y_stats;
   _float_t S_xy;
-  long long n;
+  _counter_t n;
 };
 
 #endif

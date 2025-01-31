@@ -17,12 +17,17 @@ works on ESP32 only for now
 
 straight from https://en.wikipedia.org/wiki/Exponential_smoothing#Basic_(simple)_exponential_smoothing
 
-## float vs double
+## float vs double, counter type
 
-code defaults to float, see floatdef.h
+defaults to float, see "rstypes.h"
 
 to change:
 `#define _float_t double`
+
+counters - default to uint32_t
+
+to change:
+`#define _counter_t uint64_t`
 
 ## further sources
 

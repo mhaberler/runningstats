@@ -2,7 +2,7 @@
 
 #include "cmath"
 #include <math.h>
-#include "floatdef.h"
+#include "rstypes.h"
 
 class ExponentialSmoothing {
   public:

@@ -18,7 +18,7 @@ void RunningRegression::Push(_float_t x, _float_t y) {
   n++;
 }
 
-long long RunningRegression::NumDataValues() const { return n; }
+_counter_t RunningRegression::NumDataValues() const { return n; }
 
 _float_t RunningRegression::Slope() const {
   _float_t S_xx = x_stats.Variance() * (n - 1.0);

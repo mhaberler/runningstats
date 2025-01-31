@@ -17,8 +17,7 @@ void RunningStats::Clear() {
 
 void RunningStats::Push(_float_t x) {
   _float_t delta, delta_n, delta_n2, term1;
-
-  long long n1 = n;
+  _counter_t n1 = n;
   n++;
   delta = x - M1;
   delta_n = delta / n;
@@ -31,7 +30,7 @@ void RunningStats::Push(_float_t x) {
   M2 += term1;
 }
 
-long long RunningStats::NumDataValues() const { return n; }
+_counter_t RunningStats::NumDataValues() const { return n; }
 
 _float_t RunningStats::Mean() const { return M1; }
 
