@@ -6,7 +6,7 @@
 // 90% 1.645
 // 95% 1.960
 // 99% 2.576
-static double z_values[] = {1.645, 1.960, 2.576};
+static _float_t z_values[] = {1.645, 1.960, 2.576};
 
 RunningStats::RunningStats() { Clear(); }
 
@@ -15,8 +15,8 @@ void RunningStats::Clear() {
   M1 = M2 = M3 = M4 = 0.0;
 }
 
-void RunningStats::Push(double x) {
-  double delta, delta_n, delta_n2, term1;
+void RunningStats::Push(_float_t x) {
+  _float_t delta, delta_n, delta_n2, term1;
 
   long long n1 = n;
   n++;
@@ -33,26 +33,26 @@ void RunningStats::Push(double x) {
 
 long long RunningStats::NumDataValues() const { return n; }
 
-double RunningStats::Mean() const { return M1; }
+_float_t RunningStats::Mean() const { return M1; }
 
-double RunningStats::Variance() const { return M2 / (n - 1.0); }
+_float_t RunningStats::Variance() const { return M2 / (n - 1.0); }
 
-double RunningStats::StandardDeviation() const { return sqrt(Variance()); }
+_float_t RunningStats::StandardDeviation() const { return sqrt(Variance()); }
 
-double RunningStats::Skewness() const {
-  return sqrt(double(n)) * M3 / pow(M2, 1.5);
+_float_t RunningStats::Skewness() const {
+  return sqrt(_float_t(n)) * M3 / pow(M2, 1.5);
 }
 
-double RunningStats::Kurtosis() const {
-  return double(n) * M4 / (M2 * M2) - 3.0;
+_float_t RunningStats::Kurtosis() const {
+  return _float_t(n) * M4 / (M2 * M2) - 3.0;
 }
 
-double RunningStats::ConfidenceInterval(ci_t ci) {
+_float_t RunningStats::ConfidenceInterval(ci_t ci) {
   // if (n < 300)
   //   return NAN;
   // if (ci < CI90 || ci > CI99)
   //   return NAN;
-  return z_values[ci] * StandardDeviation() / sqrt((double)n);
+  return z_values[ci] * StandardDeviation() / sqrt((_float_t)n);
 }
 
 RunningStats operator+( RunningStats const &a,  RunningStats const &b) {
@@ -60,10 +60,10 @@ RunningStats operator+( RunningStats const &a,  RunningStats const &b) {
 
   combined.n = a.n + b.n;
 
-  double delta = b.M1 - a.M1;
-  double delta2 = delta * delta;
-  double delta3 = delta * delta2;
-  double delta4 = delta2 * delta2;
+  _float_t delta = b.M1 - a.M1;
+  _float_t delta2 = delta * delta;
+  _float_t delta3 = delta * delta2;
+  _float_t delta4 = delta2 * delta2;
 
   combined.M1 = (a.n * a.M1 + b.n * b.M1) / combined.n;
 

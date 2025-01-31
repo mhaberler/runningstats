@@ -9,9 +9,9 @@ void RunningRegression::Clear() {
   n = 0;
 }
 
-void RunningRegression::Push(double x, double y) {
+void RunningRegression::Push(_float_t x, _float_t y) {
   S_xy +=
-      (x_stats.Mean() - x) * (y_stats.Mean() - y) * double(n) / double(n + 1);
+      (x_stats.Mean() - x) * (y_stats.Mean() - y) * _float_t(n) / _float_t(n + 1);
 
   x_stats.Push(x);
   y_stats.Push(y);
@@ -20,18 +20,18 @@ void RunningRegression::Push(double x, double y) {
 
 long long RunningRegression::NumDataValues() const { return n; }
 
-double RunningRegression::Slope() const {
-  double S_xx = x_stats.Variance() * (n - 1.0);
+_float_t RunningRegression::Slope() const {
+  _float_t S_xx = x_stats.Variance() * (n - 1.0);
 
   return S_xy / S_xx;
 }
 
-double RunningRegression::Intercept() const {
+_float_t RunningRegression::Intercept() const {
   return y_stats.Mean() - Slope() * x_stats.Mean();
 }
 
-double RunningRegression::Correlation() const {
-  double t = x_stats.StandardDeviation() * y_stats.StandardDeviation();
+_float_t RunningRegression::Correlation() const {
+  _float_t t = x_stats.StandardDeviation() * y_stats.StandardDeviation();
   return S_xy / ((n - 1) * t);
 }
 
@@ -43,10 +43,10 @@ RunningRegression operator+(const RunningRegression a,
   combined.y_stats = a.y_stats + b.y_stats;
   combined.n = a.n + b.n;
 
-  double delta_x = b.x_stats.Mean() - a.x_stats.Mean();
-  double delta_y = b.y_stats.Mean() - a.y_stats.Mean();
+  _float_t delta_x = b.x_stats.Mean() - a.x_stats.Mean();
+  _float_t delta_y = b.y_stats.Mean() - a.y_stats.Mean();
   combined.S_xy = a.S_xy + b.S_xy +
-                  double(a.n * b.n) * delta_x * delta_y / double(combined.n);
+                  _float_t(a.n * b.n) * delta_x * delta_y / _float_t(combined.n);
 
   return combined;
 }

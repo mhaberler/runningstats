@@ -2,25 +2,26 @@
 
 #include "cmath"
 #include <math.h>
+#include "floatdef.h"
 
 class ExponentialSmoothing {
   public:
-    ExponentialSmoothing(double alpha = 1.0) : _alpha(alpha) {
+    ExponentialSmoothing(_float_t alpha = 1.0) : _alpha(alpha) {
     }
 
-    const double & Alpha(void) {
+    const _float_t & Alpha(void) {
         return _alpha;
     }
 
-    void setAlpha(double alpha) { // 0-1
+    void setAlpha(_float_t alpha) { // 0-1
         _alpha = alpha;
     }
 
-    const double & Value(void)  {
+    const _float_t & Value(void)  {
         return _value;
     }
 
-    void Push(double x) {
+    void Push(_float_t x) {
         if (isnan(_value)) {
             _value = x;
         } else {
@@ -28,14 +29,14 @@ class ExponentialSmoothing {
         }
     }
 
-    const double &  Smooth(double x) {
+    const _float_t &  Smooth(_float_t x) {
         Push(x);
         return _value;
     }
 
   private:
 
-    double _alpha;
-    double _value = nan("");
+    _float_t _alpha;
+    _float_t _value = nan("");
 };
 

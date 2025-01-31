@@ -29,7 +29,7 @@ class TimerStats : public RunningStats {
         }
     }
     
-    double StartTime() {
+    _float_t StartTime() {
         return _starttime;
     }
 
@@ -39,8 +39,8 @@ class TimerStats : public RunningStats {
     }
 
   private:
-    double _starttime = NAN;
-    double _laptime = NAN;
+    _float_t _starttime = NAN;
+    _float_t _laptime = NAN;
 };
 
 #endif

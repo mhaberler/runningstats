@@ -9,11 +9,11 @@ class RunningRegression {
 public:
   RunningRegression();
   void Clear();
-  void Push(double x, double y);
+  void Push(_float_t x, _float_t y);
   long long NumDataValues() const;
-  double Slope() const;
-  double Intercept() const;
-  double Correlation() const;
+  _float_t Slope() const;
+  _float_t Intercept() const;
+  _float_t Correlation() const;
 
   friend RunningRegression operator+(const RunningRegression a,
                                      const RunningRegression b);
@@ -22,7 +22,7 @@ public:
 private:
   RunningStats x_stats;
   RunningStats y_stats;
-  double S_xy;
+  _float_t S_xy;
   long long n;
 };
 

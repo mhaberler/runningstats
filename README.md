@@ -17,6 +17,12 @@ works on ESP32 only for now
 
 straight from https://en.wikipedia.org/wiki/Exponential_smoothing#Basic_(simple)_exponential_smoothing
 
+## float vs double
+
+code defaults to float, see floatdef.h
+
+to change:
+`#define _float_t double`
 
 ## further sources
 
