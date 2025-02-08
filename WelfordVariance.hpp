@@ -15,6 +15,8 @@ class WelfordVariance
 public:
     WelfordVariance() : _mean(0), _s(0), _count(0) {}
 
+    void clear(void) { _mean = 0; _s = 0; _count = 0; }
+
     void add(T value)
     {
         ++_count;
