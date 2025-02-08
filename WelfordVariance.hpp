@@ -103,6 +103,15 @@ public:
         return _varianceAcc / _count;
     }
 
+    const uint32_t &getCount() const
+    {
+        return _count;
+    }
+    
+    const uint32_t &getWindowSize() const
+    {
+        return _windowSize;
+    }
 private:
     const uint32_t _windowSize;
     T _mean;
