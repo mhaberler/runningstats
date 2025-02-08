@@ -94,7 +94,7 @@ public:
         return _mean / _count;
     }
 
-    T getVariance() const
+    T getPopulationVariance() const
     {
         if (_count < 2)
         {
@@ -103,11 +103,20 @@ public:
         return _varianceAcc / _count;
     }
 
+    T getSampleVariance() const
+    {
+        if (_count < 2)
+        {
+            return 0;
+        }
+        return _varianceAcc / (_count - 1);
+    }
+
     const uint32_t &getCount() const
     {
         return _count;
     }
-    
+
     const uint32_t &getWindowSize() const
     {
         return _windowSize;
