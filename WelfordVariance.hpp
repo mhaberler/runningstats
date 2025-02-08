@@ -51,8 +51,8 @@ public:
           _count(0),
           _cursor(0),
           _varianceAcc(0),
-          _values(new T[windowSize]),
-          _varValues(new T[windowSize])
+          _values(new T[windowSize]()),
+          _varValues(new T[windowSize]())
     {
     }
 
