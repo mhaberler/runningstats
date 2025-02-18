@@ -39,7 +39,8 @@ https://github.com/onlinestats - histogram, autocorrelation, autocovariance
 
 https://github.com/pierre/holt-winters/blob/master/holt-winters.c 
 
-
 https://github.com/topics/online-algorithms
 
+https://github.com/breese/trial.online
 
+https://github.com/breese/trial.circular/blob/develop/doc/circular.adoc
