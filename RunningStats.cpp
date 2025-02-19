@@ -35,6 +35,7 @@ _counter_t RunningStats::NumDataValues() const { return n; }
 _float_t RunningStats::Mean() const { return M1; }
 
 _float_t RunningStats::Variance() const { return M2 / (n - 1.0); }
+_float_t RunningStats::PopulationVariance() const { return M2 / n; }
 
 _float_t RunningStats::StandardDeviation() const { return sqrt(Variance()); }
 

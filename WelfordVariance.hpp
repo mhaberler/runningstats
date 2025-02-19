@@ -35,6 +35,15 @@ public:
         return _s / (_count - 1);
     }
 
+    T getPopulationVariance() const
+    {
+        if (_count < 1)
+        {
+            return NAN;
+        }
+        return _s / _count;
+    }
+
 private:
     T _mean;
     T _s;
@@ -98,9 +107,9 @@ public:
 
     T getPopulationVariance() const
     {
-        if (_count < 2)
+        if (_count < 1)
         {
-            return 0;
+            return NAN;
         }
         return _varianceAcc / _count;
     }
@@ -109,7 +118,7 @@ public:
     {
         if (_count < 2)
         {
-            return 0;
+            return NAN;
         }
         return _varianceAcc / (_count - 1);
     }

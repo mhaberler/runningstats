@@ -18,6 +18,7 @@ public:
   _counter_t NumDataValues() const;
   _float_t Mean() const;
   _float_t Variance() const;
+  _float_t PopulationVariance() const; 
   _float_t StandardDeviation() const;
   _float_t Skewness() const;
   _float_t Kurtosis() const;
