@@ -1,4 +1,39 @@
 // g++ -std=c++17 variancetest.cpp ../RunningStats.cpp
+// BigM1 runningstats/tests main $ g++ -std=c++17 variancetest.cpp ../RunningStats.cpp 
+// BigM1 runningstats/tests main $ ./a.out                                            
+// Test: Empty Set - Passed (NaN)
+// Test wv: Empty Set - Passed (NaN)
+// Test rwv: Empty Set - Passed (NaN)
+// Test rs: Empty Set - Passed (NaN)
+// Test: Single Element - Passed (Result: 0)
+// Test wv: Single Element - Passed (Result: 0)
+// Test rwv: Single Element - Passed (Result: 0)
+// Test rs: Single Element - Passed (Result: 0)
+// Test: All Identical - Passed (Result: 0)
+// Test wv: All Identical - Passed (Result: 0)
+// Test rwv: All Identical - Passed (Result: 0)
+// Test rs: All Identical - Passed (Result: 0)
+// Test: Small Positive Integers - Passed (Result: 2)
+// Test wv: Small Positive Integers - Passed (Result: 2)
+// Test rwv: Small Positive Integers - Passed (Result: 2)
+// Test rs: Small Positive Integers - Passed (Result: 2)
+// Test: Negative Numbers - Passed (Result: 2)
+// Test wv: Negative Numbers - Passed (Result: 2)
+// Test rwv: Negative Numbers - Passed (Result: 2)
+// Test rs: Negative Numbers - Passed (Result: 2)
+// Test: Large Range - Failed (Expected: 3.32332e+08, Got: 2.22e+11)
+// Test wv: Large Range - Failed (Expected: 3.32332e+08, Got: 2.22e+11)
+// Test rwv: Large Range - Failed (Expected: 3.32332e+08, Got: 2.22e+11)
+// Test rs: Large Range - Failed (Expected: 3.32332e+08, Got: 2.22e+11)
+// Test: Floating-Point - Passed (Result: 0.666667)
+// Test wv: Floating-Point - Passed (Result: 0.666667)
+// Test rwv: Floating-Point - Passed (Result: 0.666667)
+// Test rs: Floating-Point - Passed (Result: 0.666667)
+// Test: Duplicates - Passed (Result: 1)
+// Test wv: Duplicates - Passed (Result: 1)
+// Test rwv: Duplicates - Passed (Result: 1)
+// Test rs: Duplicates - Passed (Result: 1)
+
 
 #include <iostream>
 #include <vector>
