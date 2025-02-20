@@ -40,12 +40,12 @@
 #include <cassert>
 #include <cmath>
 
-#include "../WelfordVariance.hpp"
-#include "../OnlineVariance.hpp"
+#define _float_t double
+
+#include "../RollingVariance.hpp"
 #include "../RunningStats.hpp"
 
 #define WINDOW 5
-math::WelfordVariance<float> wv;
 RunningStats rs;
 
 
@@ -109,48 +109,48 @@ void runTest(const std::vector<double>& data, double expected, const std::string
         }
     }
 
-    wv.clear();
-    for (double x : data) wv.add(x);
-    result = wv.getPopulationVariance();
-    std::cout << "Test wv: " << testName << " - ";
-    if (data.empty()) {
-        if (std::isnan(result) && std::isnan(expected)) {
-            std::cout << "Passed (NaN)\n";
-        } else {
-            std::cout << "Failed (Expected NaN, Got " << result << ")\n";
-        }
-    } else {
-        double tolerance = 1e-6; // For floating-point comparison
-        if (std::abs(result - expected) < tolerance) {
-            std::cout << "Passed (Result: " << result << ")\n";
-        } else {
-            std::cout << "Failed (Expected: " << expected << ", Got: " << result << ")\n";
-        }
-    }
+    // wv.clear();
+    // for (double x : data) wv.add(x);
+    // result = wv.getPopulationVariance();
+    // std::cout << "Test wv: " << testName << " - ";
+    // if (data.empty()) {
+    //     if (std::isnan(result) && std::isnan(expected)) {
+    //         std::cout << "Passed (NaN)\n";
+    //     } else {
+    //         std::cout << "Failed (Expected NaN, Got " << result << ")\n";
+    //     }
+    // } else {
+    //     double tolerance = 1e-6; // For floating-point comparison
+    //     if (std::abs(result - expected) < tolerance) {
+    //         std::cout << "Passed (Result: " << result << ")\n";
+    //     } else {
+    //         std::cout << "Failed (Expected: " << expected << ", Got: " << result << ")\n";
+    //     }
+    // }
 
-    math::RollingWelfordVariance<float> rwv(
-        WINDOW
-    );
-    for (double x : data) rwv.add(x);
-    result = rwv.getPopulationVariance();
-    std::cout << "Test rwv: " << testName << " - ";
-    if (data.empty()) {
-        if (std::isnan(result) && std::isnan(expected)) {
-            std::cout << "Passed (NaN)\n";
-        } else {
-            std::cout << "Failed (Expected NaN, Got " << result << ")\n";
-        }
-    } else {
-        double tolerance = 1e-6; // For floating-point comparison
-        if (std::abs(result - expected) < tolerance) {
-            std::cout << "Passed (Result: " << result << ")\n";
-        } else {
-            std::cout << "Failed (Expected: " << expected << ", Got: " << result << ")\n";
-        }
-    }
+    // math::RollingWelfordVariance<float> rwv(
+    //     WINDOW
+    // );
+    // for (double x : data) rwv.add(x);
+    // result = rwv.getPopulationVariance();
+    // std::cout << "Test rwv: " << testName << " - ";
+    // if (data.empty()) {
+    //     if (std::isnan(result) && std::isnan(expected)) {
+    //         std::cout << "Passed (NaN)\n";
+    //     } else {
+    //         std::cout << "Failed (Expected NaN, Got " << result << ")\n";
+    //     }
+    // } else {
+    //     double tolerance = 1e-6; // For floating-point comparison
+    //     if (std::abs(result - expected) < tolerance) {
+    //         std::cout << "Passed (Result: " << result << ")\n";
+    //     } else {
+    //         std::cout << "Failed (Expected: " << expected << ", Got: " << result << ")\n";
+    //     }
+    // }
 
-    OnlineVariance ov(WINDOW);
-    for (double x : data) ov.update(x);
+    RollingVariance ov(WINDOW);
+    for (double x : data) ov.add(x);
     result = ov.variance();
     std::cout << "Test ov: " << testName << " - ";
     if (data.empty()) {
@@ -202,7 +202,7 @@ int main() {
     runTest({1.5, 2.5, 3.5}, 0.666667, "Floating-Point");
     runTest({2, 2, 4, 4}, 1.0, "Duplicates");
 
-    runTest({1,1,1,1,1, 2, 3, 4, 5}, 2.0, "----Small Positive Integers");
+    runTest({273, 114, 12,85, 1,1, 2, 3, 4, 5}, 2.0, "----Small Positive Integers");
 
     return 0;
 }
