@@ -27,7 +27,7 @@ public:
      * @brief Add a new value to the window and compute new statistics
      * @param value The new value to add
      */
-    void add(double x) {
+    void add(_float_t x) {
         _i = (_i + 1) % _n;
         _float_t xold = _samples[_i];
         _float_t dx = x - xold;  // oldest x
