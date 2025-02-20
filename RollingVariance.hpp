@@ -9,12 +9,12 @@
 
 
 class RollingVariance {
-private:
+  private:
     std::vector<_float_t> _samples;
     _float_t _mean, _var;
     size_t _n, _i;
 
-public:
+  public:
     /**
      * @brief Constructor for RollingVariance
      * @param size The size of the window for variance calculation
@@ -52,6 +52,10 @@ public:
      */
     _float_t mean() const {
         return _mean;
+    }
+
+    size_t getWindowSize(void) {
+        return _n;
     }
 };
 
