@@ -1,21 +1,23 @@
 #ifndef ROLLING_VARIANCE_H
 #define ROLLING_VARIANCE_H
 
+// based upon https://stackoverflow.com/questions/5147378/rolling-variance-algorithm/74239458#74239458
+
 #include <vector>
 
 template <typename T>
 class RollingVariance {
-private:
+  private:
     std::vector<T> _samples;
     T _mean, _var_sum;
     size_t _window_size, _i;
 
-public:
+  public:
     /**
      * @brief Constructor for RollingVariance
      * @param window_size The size of the window for variance calculation
      */
-    RollingVariance(size_t window_size) 
+    RollingVariance(size_t window_size)
         : _window_size(window_size), _i(0), _mean(static_cast<T>(0.0)), _var_sum(static_cast<T>(0.0)) {
         _samples.resize(_window_size, static_cast<T>(0.0));
     }
@@ -28,6 +30,17 @@ public:
         _mean = static_cast<T>(0.0);
         _var_sum = static_cast<T>(0.0);
         std::fill(_samples.begin(), _samples.end(), static_cast<T>(0.0));
+    }
+
+    /**
+    * @brief Fill the window with a specified value and update statistics
+    * @param value The value to fill the window with
+    */
+    void Prime(T value) {
+        std::fill(_samples.begin(), _samples.end(), value);
+        _i = 0; // Reset index to start (though it doesn't affect variance/mean here)
+        _mean = value; // Mean is the value itself since all elements are identical
+        _var_sum = static_cast<T>(0.0); // Variance of identical values is 0
     }
 
     /**
