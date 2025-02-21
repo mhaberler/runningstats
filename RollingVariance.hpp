@@ -1,52 +1,71 @@
 #ifndef ROLLING_VARIANCE_H
 #define ROLLING_VARIANCE_H
 
-#include "rstypes.h"
-
 #include <vector>
 
-// https://stackoverflow.com/questions/5147378/rolling-variance-algorithm/74239458#74239458
-
-
+template <typename T>
 class RollingVariance {
-  private:
-    std::vector<_float_t> _samples;
-    _float_t _mean, _var_sum;
+private:
+    std::vector<T> _samples;
+    T _mean, _var_sum;
     size_t _window_size, _i;
 
-  public:
+public:
     /**
      * @brief Constructor for RollingVariance
      * @param window_size The size of the window for variance calculation
      */
-    RollingVariance(size_t window_size) : _window_size(window_size), _i(0), _mean(0.0), _var_sum(0.0) {
-        _samples.resize(_window_size, 0.0);
+    RollingVariance(size_t window_size) 
+        : _window_size(window_size), _i(0), _mean(static_cast<T>(0.0)), _var_sum(static_cast<T>(0.0)) {
+        _samples.resize(_window_size, static_cast<T>(0.0));
+    }
+
+    /**
+     * @brief Reset the instance to its initial state
+     */
+    void Clear() {
+        _i = 0;
+        _mean = static_cast<T>(0.0);
+        _var_sum = static_cast<T>(0.0);
+        std::fill(_samples.begin(), _samples.end(), static_cast<T>(0.0));
     }
 
     /**
      * @brief Add a new value to the window and compute new statistics
      * @param x_new The new value to add
      */
-    void Push(_float_t x_new) {
+    void Push(T x_new) {
         _i = (_i + 1) % _window_size;
-        _float_t x_old = _samples[_i];
-        _float_t dx = x_new - x_old;  // oldest x
-        _float_t new_mean = _mean + dx / (_float_t) _window_size; // new mean
+        T x_old = _samples[_i];
+        T dx = x_new - x_old;  // oldest x
+        T new_mean = _mean + dx / static_cast<T>(_window_size); // new mean
 
         _var_sum += ((x_new + x_old - _mean - new_mean) * dx);
         _mean = new_mean;
         _samples[_i] = x_new;
     }
 
-    _float_t Variance() const {
-        return _var_sum / _window_size;
+    /**
+     * @brief Compute the variance of the current window
+     * @return The variance
+     */
+    T Variance() const {
+        return _var_sum / static_cast<T>(_window_size);
     }
 
-    _float_t Mean(void) const {
+    /**
+     * @brief Get the current mean of the window
+     * @return The mean value
+     */
+    T Mean() const {
         return _mean;
     }
 
-    size_t getWindowSize(void) {
+    /**
+     * @brief Get the window size
+     * @return The size of the window
+     */
+    size_t getWindowSize() const {
         return _window_size;
     }
 };
