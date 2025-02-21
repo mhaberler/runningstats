@@ -11,7 +11,7 @@
 class RollingVariance {
   private:
     std::vector<_float_t> _samples;
-    _float_t _mean, _var;
+    _float_t _mean, _pop_var, _sample_var;
     size_t _n, _i;
 
   public:
@@ -19,7 +19,7 @@ class RollingVariance {
      * @brief Constructor for RollingVariance
      * @param size The size of the window for variance calculation
      */
-    RollingVariance(size_t window_size) : _n(window_size), _mean(0.0), _var(0.0) {
+    RollingVariance(size_t window_size) : _n(window_size), _mean(0.0), _pop_var(0.0), _sample_var(0.0) {
         _samples.resize(_n, 0.0);
     }
 
@@ -27,30 +27,30 @@ class RollingVariance {
      * @brief Add a new value to the window and compute new statistics
      * @param value The new value to add
      */
-    void add(_float_t x) {
+    void Push(_float_t x) {
         _i = (_i + 1) % _n;
         _float_t xold = _samples[_i];
         _float_t dx = x - xold;  // oldest x
         _float_t nmean = _mean + dx / (_float_t) _n; // new mean
-        //_var += ((x - _mean)*(x - nmean) - (xold - _mean) * (xold - nmean)) / (float) _n;
-        _var += ((x + xold - _mean - nmean) * dx) / (_float_t) _n;
+        //_pop_var += ((x - _mean)*(x - nmean) - (xold - _mean) * (xold - nmean)) / (float) _n;
+        // _pop_var += ((x + xold - _mean - nmean) * dx) / (_float_t) _n;
+        _float_t d = (x + xold - _mean - nmean) * dx;
+
+        _pop_var += d / _n;
+        _sample_var += d / (_n - 1);
         _mean = nmean;
         _samples[_i] = x;
     }
 
-    /**
-     * @brief Compute the variance of the values in the window
-     * @return The variance of the current window
-     */
-    _float_t variance() const {
-        return _var;
+    _float_t PopulationVariance() const {
+        return _pop_var;
     }
 
-    /**
-     * @brief Get the current mean of the window
-     * @return The mean value
-     */
-    _float_t mean() const {
+    _float_t Variance() const {
+        return _sample_var;
+    }
+
+    _float_t Mean(void) const {
         return _mean;
     }
 
