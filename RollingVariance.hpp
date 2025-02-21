@@ -19,7 +19,7 @@ class RollingVariance {
      * @brief Constructor for RollingVariance
      * @param size The size of the window for variance calculation
      */
-    RollingVariance(size_t window_size) : _n(window_size), _mean(0.0), _pop_var(0.0), _sample_var(0.0) {
+    RollingVariance(size_t window_size) : _n(window_size), _i(0), _mean(0.0), _pop_var(0.0), _sample_var(0.0) {
         _samples.resize(_n, 0.0);
     }
 
