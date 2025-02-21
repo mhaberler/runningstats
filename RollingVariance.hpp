@@ -1,6 +1,8 @@
 #ifndef ROLLING_VARIANCE_H
 #define ROLLING_VARIANCE_H
 
+// based upon https://stackoverflow.com/questions/5147378/rolling-variance-algorithm/74239458#74239458
+
 #include <vector>
 
 template <typename T>
