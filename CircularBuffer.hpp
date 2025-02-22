@@ -10,16 +10,14 @@ public:
     explicit CircularBuffer(size_t capacity) 
         : buffer(capacity), maxSize(capacity), head(0), tail(0), full(false) {}
 
-    bool push(const T& item) {
-        if (isFull()) {
-            return false;
-        }
+    void push(const T& item) {
         buffer[head] = item;
         head = (head + 1) % maxSize;
-        if (head == tail) {
-            full = true;
+        if (full) {
+            tail = (tail + 1) % maxSize;  // Move tail when overwriting
+        } else if (head == tail) {
+            full = true;  // Mark as full when head catches up to tail
         }
-        return true;
     }
 
     bool pop(T& output) {
