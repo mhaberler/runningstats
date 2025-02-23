@@ -33,4 +33,9 @@ public:
         Variance();
         return RunningVariance<T>::Mean();
     }
+
+    size_t getWindowSize() const {
+        return cb->capacity();
+    }
+
 };
