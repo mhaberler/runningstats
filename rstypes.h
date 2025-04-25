@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <cmath>
 /**
   * Floating-point precision defaults to single but can be made double via
     <tt><b>#define _float_t double</b></tt> before <tt>#include <tinyekf.h></tt>

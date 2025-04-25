@@ -20,7 +20,7 @@ class TimerStats : public RunningStats {
 
     // or use as a lap timer: measure stats for time between Lap() calls
     void Lap() {
-        if (_laptime == NAN) {
+        if (std::isnan(_laptime)) { // first time
             _laptime = dmicros();
         } else {
             uint32_t now = dmicros();
