@@ -20,7 +20,7 @@ class TimerStats : public RunningStats {
 
     // or use as a lap timer: measure stats for time between Lap() calls
     void Lap() {
-        if (_laptime == 0) {
+        if (_laptime == NAN) {
             _laptime = dmicros();
         } else {
             uint32_t now = dmicros();
@@ -28,7 +28,7 @@ class TimerStats : public RunningStats {
             _laptime = now;
         }
     }
-    
+
     _float_t StartTime() {
         return _starttime;
     }
