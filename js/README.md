@@ -1,6 +1,19 @@
 # Running Statistics - TypeScript Implementation
 
-This directory contains TypeScript implementations of the C++ statistical classes. All template parameters have been removed and the classes now work specifically with JavaScript numbers.
+This directory contains TypeScript implementations of the C++ statistical classes. A```typescript
+import {
+    CircularBuffer,
+    RunningVariance,
+    RollingVariance,
+    WindowVariance,
+    RunningStats,
+    RunningRegression,
+    ExponentialSmoothing,
+    TimerStats,
+    RateStats,
+    ConfidenceInterval
+} from './index';
+``` parameters have been removed and the classes now work specifically with JavaScript numbers.
 
 ## Classes
 
@@ -76,6 +89,51 @@ console.log(rr.correlation()); // Pearson correlation coefficient
 console.log(rr.rSquared()); // R-squared value
 console.log(rr.equation()); // "y = mx + b" string
 console.log(rr.predict(4)); // Predict y for x=4
+```
+
+### ExponentialSmoothing
+Exponential smoothing filter for noise reduction in time series data.
+
+```typescript
+const es = new ExponentialSmoothing(0.3); // Alpha = 0.3 (smoothing factor)
+const smoothed = es.smooth(10.5); // Add value and get smoothed result
+console.log(es.getValue()); // Current smoothed value
+es.setAlpha(0.1); // Change smoothing factor
+```
+
+### TimerStats
+Timer-based statistics for measuring operation durations with high precision.
+
+```typescript
+const ts = new TimerStats();
+
+// Interval timing
+ts.start();
+// ... do some work ...
+ts.stop(); // Records the duration
+
+// Lap timing
+ts.lap(); // First call establishes baseline
+// ... do some work ...
+ts.lap(); // Records time since last lap
+
+console.log(ts.meanMilliseconds()); // Average duration in ms
+console.log(ts.standardDeviationSeconds()); // Std dev in seconds
+```
+
+### RateStats
+Measures instantaneous rates between consecutive events and maintains statistics.
+
+```typescript
+const rs = new RateStats();
+
+// Record events
+rs.push(); // First call establishes baseline
+rs.push(); // Subsequent calls calculate rates
+
+console.log(rs.averageRate()); // Average events per second
+console.log(rs.timeSinceLastPush()); // Time since last event
+console.log(rs.getRateSummary()); // Complete rate statistics
 ```
 
 ## Building

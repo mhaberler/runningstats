@@ -1,4 +1,15 @@
-import { CircularBuffer, RunningVariance, RollingVariance, WindowVariance, RunningStats, RunningRegression, ConfidenceInterval } from './index';
+import {
+    CircularBuffer,
+    RunningVariance,
+    RollingVariance,
+    WindowVariance,
+    RunningStats,
+    RunningRegression,
+    ConfidenceInterval,
+    ExponentialSmoothing,
+    TimerStats,
+    RateStats
+} from './index';
 
 // Example usage and tests
 console.log('=== CircularBuffer Test ===');
@@ -60,3 +71,57 @@ console.log('R-squared:', rr.rSquared());
 console.log('Equation:', rr.equation());
 console.log('Predict x=11:', rr.predict(11));
 console.log('Data points:', rr.numDataValues());
+
+console.log('\n=== ExponentialSmoothing Test ===');
+const es = new ExponentialSmoothing(0.3); // Alpha = 0.3
+const noisyData = [10, 12, 8, 15, 9, 11, 13, 7, 14, 10];
+console.log('Raw data:', noisyData);
+console.log('Smoothed values:');
+noisyData.forEach((value, i) => {
+    const smoothed = es.smooth(value);
+    console.log(`  Step ${i + 1}: ${value} -> ${smoothed.toFixed(2)}`);
+});
+console.log('Final smoothed value:', es.getValue());
+
+console.log('\n=== TimerStats Test ===');
+const ts = new TimerStats();
+
+// Simulate some timed operations
+for (let i = 0; i < 5; i++) {
+    ts.start();
+    // Simulate work with a small delay
+    const start = performance.now();
+    while (performance.now() - start < 1 + Math.random() * 2) {
+        // Busy wait for 1-3ms
+    }
+    ts.stop();
+}
+
+const timerSummary = ts.getSummary();
+console.log('Timer Summary:');
+console.log('  Count:', timerSummary.count);
+console.log('  Mean (ms):', timerSummary.meanMillis.toFixed(3));
+console.log('  Std Dev (ms):', timerSummary.stdDevMillis.toFixed(3));
+
+console.log('\n=== RateStats Test ===');
+const rates = new RateStats();
+
+// Simulate events with varying intervals
+console.log('Simulating events...');
+for (let i = 0; i < 5; i++) {
+    rates.push(); // Record an event
+
+    // Wait with a random interval (simulated)
+    const start = performance.now();
+    const waitTime = 50 + Math.random() * 100; // 50-150ms
+    while (performance.now() - start < waitTime) {
+        // Busy wait
+    }
+}
+
+const rateSummary = rates.getRateSummary();
+console.log('Rate Summary:');
+console.log('  Events recorded:', rateSummary.count);
+console.log('  Average rate (events/sec):', rateSummary.averageRate.toFixed(2));
+console.log('  Rate std dev:', rateSummary.rateStdDev.toFixed(2));
+console.log('  Time since last event (ms):', rateSummary.timeSinceLastMillis.toFixed(1));
