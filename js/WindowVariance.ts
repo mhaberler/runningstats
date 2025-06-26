@@ -21,7 +21,7 @@ export class WindowVariance extends RunningVariance {
      * Calculate the variance of the current window
      * @return The variance
      */
-    variance(): number {
+    override variance(): number {
         this.clear();
         for (const value of this.cb) {
             this.push(value);
@@ -33,7 +33,7 @@ export class WindowVariance extends RunningVariance {
      * Calculate the mean of the current window
      * @return The mean
      */
-    mean(): number {
+    override mean(): number {
         this.variance(); // This will compute both variance and mean
         return super.mean();
     }
@@ -74,7 +74,7 @@ export class WindowVariance extends RunningVariance {
      * Get the standard deviation of the current window
      * @return The standard deviation
      */
-    standardDeviation(): number {
+    override standardDeviation(): number {
         return Math.sqrt(this.variance());
     }
 

@@ -1,7 +1,7 @@
 export class RunningVariance {
-    private n: number; // Number of values
-    private M1: number; // First moment (mean)
-    private M2: number; // Second moment (for variance)
+    private n: number = 0; // Number of values
+    private M1: number = 0; // First moment (mean)
+    private M2: number = 0; // Second moment (for variance)
 
     constructor() {
         this.clear();
