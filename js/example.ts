@@ -8,8 +8,10 @@ import {
     ConfidenceInterval,
     ExponentialSmoothing,
     TimerStats,
-    RateStats
+    RateStats,
+    QuadraticFitOnline
 } from './index';
+import { testQuadraticFitOnline } from './QuadraticFitOnline.test';
 
 // Example usage and tests
 console.log('=== CircularBuffer Test ===');
@@ -125,3 +127,6 @@ console.log('  Events recorded:', rateSummary.count);
 console.log('  Average rate (events/sec):', rateSummary.averageRate.toFixed(2));
 console.log('  Rate std dev:', rateSummary.rateStdDev.toFixed(2));
 console.log('  Time since last event (ms):', rateSummary.timeSinceLastMillis.toFixed(1));
+
+// Test QuadraticFitOnline
+testQuadraticFitOnline();

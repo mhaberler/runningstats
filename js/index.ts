@@ -7,3 +7,4 @@ export { RunningRegression } from './RunningRegression';
 export { ExponentialSmoothing } from './ExponentialSmoothing';
 export { TimerStats } from './TimerStats';
 export { RateStats } from './RateStats';
+export { QuadraticFitOnline } from './QuadraticFitOnline';

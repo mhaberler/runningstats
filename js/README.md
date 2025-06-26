@@ -1,6 +1,7 @@
 # Running Statistics - TypeScript Implementation
 
-This directory contains TypeScript implementations of the C++ statistical classes. A```typescript
+This directory contains TypeScript implementations of the C++ statistical classes in the directory above.
+```
 import {
     CircularBuffer,
     RunningVariance,
@@ -13,7 +14,8 @@ import {
     RateStats,
     ConfidenceInterval
 } from './index';
-``` parameters have been removed and the classes now work specifically with JavaScript numbers.
+```
+typescript parameters have been removed and the classes now work specifically with JavaScript numbers.
 
 ## Classes
 
@@ -136,6 +138,21 @@ console.log(rs.timeSinceLastPush()); // Time since last event
 console.log(rs.getRateSummary()); // Complete rate statistics
 ```
 
+### QuadraticFitOnline
+Online quadratic regression using recursive least squares algorithm. Fits y = ax² + bx + c to streaming data.
+
+```typescript
+const qf = new QuadraticFitOnline();
+qf.update(0, 1); // Add (x, y) data points
+qf.update(1, 4);
+qf.update(2, 9);
+
+const [c, b, a] = qf.getCoefficients(); // [constant, linear, quadratic]
+console.log(qf.getEquation()); // "y = 1.000000x² + 0.000000x + 1.000000"
+console.log(qf.predict(3)); // Predict y for x=3
+console.log(qf.calculateRSquared(dataPoints)); // R-squared for fit quality
+```
+
 ## Building
 
 ```bash
@@ -153,6 +170,10 @@ import {
     WindowVariance,
     RunningStats,
     RunningRegression,
+    ExponentialSmoothing,
+    TimerStats,
+    RateStats,
+    QuadraticFitOnline,
     ConfidenceInterval
 } from './index';
 ```
@@ -167,6 +188,12 @@ import {
 6. **Null Safety**: Methods that could fail (like `pop()`) return `null` instead of boolean success flags
 7. **Operator Overloading**: Replaced with explicit methods (e.g., `combine()`, `add()`)
 8. **Enums**: TypeScript enums used for confidence interval types
+9. **Linear Algebra**: Uses mathjs library instead of Eigen for matrix operations
+
+## Dependencies
+
+- **mathjs**: Used by QuadraticFitOnline for matrix operations (replaces C++ Eigen library)
+- All other classes are dependency-free and use only built-in JavaScript functionality
 
 ## Statistical Algorithms
 
@@ -182,6 +209,13 @@ import {
 - Provides R-squared for goodness of fit
 - Supports prediction and equation formatting
 - Can combine multiple regression instances
+
+### QuadraticFitOnline
+- Uses recursive least squares (RLS) algorithm for online quadratic fitting
+- Implements Kalman filter-like updates for coefficient estimation
+- No need to store historical data points (truly online)
+- Uses mathjs for matrix operations (3x3 matrices and 3x1 vectors)
+- Provides R-squared calculation for fit quality assessment
 
 ### Variance Classes
 - **RunningVariance**: Simple running variance (Welford's algorithm)
