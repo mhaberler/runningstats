@@ -47,6 +47,37 @@ console.log(wv.variance()); // Variance of values in window
 console.log(wv.getValues()); // Array of current window values
 ```
 
+### RunningStats
+Comprehensive running statistics including mean, variance, skewness, kurtosis, and confidence intervals.
+
+```typescript
+const rs = new RunningStats();
+rs.push(1);
+rs.push(2);
+rs.push(3);
+console.log(rs.mean()); // Mean
+console.log(rs.variance()); // Sample variance
+console.log(rs.skewness()); // Skewness
+console.log(rs.kurtosis()); // Kurtosis
+console.log(rs.confidenceInterval(ConfidenceInterval.CI95)); // 95% CI
+```
+
+### RunningRegression
+Online linear regression calculation with slope, intercept, correlation, and prediction capabilities.
+
+```typescript
+const rr = new RunningRegression();
+rr.push(1, 2.1); // (x, y) pairs
+rr.push(2, 4.2);
+rr.push(3, 5.8);
+console.log(rr.slope()); // Regression slope
+console.log(rr.intercept()); // Y-intercept
+console.log(rr.correlation()); // Pearson correlation coefficient
+console.log(rr.rSquared()); // R-squared value
+console.log(rr.equation()); // "y = mx + b" string
+console.log(rr.predict(4)); // Predict y for x=4
+```
+
 ## Building
 
 ```bash
@@ -57,7 +88,15 @@ npm run build
 ## Usage
 
 ```typescript
-import { CircularBuffer, RunningVariance, RollingVariance, WindowVariance } from './index';
+import {
+    CircularBuffer,
+    RunningVariance,
+    RollingVariance,
+    WindowVariance,
+    RunningStats,
+    RunningRegression,
+    ConfidenceInterval
+} from './index';
 ```
 
 ## Key Changes from C++
@@ -68,9 +107,32 @@ import { CircularBuffer, RunningVariance, RollingVariance, WindowVariance } from
 4. **Method Names**: Converted to camelCase following JavaScript conventions
 5. **Return Types**: Methods that returned by reference now return values directly
 6. **Null Safety**: Methods that could fail (like `pop()`) return `null` instead of boolean success flags
+7. **Operator Overloading**: Replaced with explicit methods (e.g., `combine()`, `add()`)
+8. **Enums**: TypeScript enums used for confidence interval types
+
+## Statistical Algorithms
+
+### RunningStats
+- Uses Welford's online algorithm for numerically stable computation
+- Calculates up to 4th moment (kurtosis) incrementally
+- Supports confidence intervals for normal distributions
+- Can combine multiple instances for parallel computation
+
+### RunningRegression
+- Implements online linear regression using running covariance
+- Calculates Pearson correlation coefficient
+- Provides R-squared for goodness of fit
+- Supports prediction and equation formatting
+- Can combine multiple regression instances
+
+### Variance Classes
+- **RunningVariance**: Simple running variance (Welford's algorithm)
+- **RollingVariance**: Fixed-window variance with O(1) updates
+- **WindowVariance**: Flexible windowed variance with value access
 
 ## Performance Notes
 
 - All classes maintain O(1) operations for their core functionality
 - RollingVariance is more efficient than WindowVariance for pure variance calculation
 - WindowVariance provides more flexibility with access to individual window values
+- RunningStats and RunningRegression support parallel computation via combine operations
