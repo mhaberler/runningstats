@@ -1,3 +1,5 @@
 .pio
 .vscode
 tests/a.out
+js/node_modules
+js/dist
