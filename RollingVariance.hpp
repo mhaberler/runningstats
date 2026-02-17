@@ -18,7 +18,7 @@ class RollingVariance {
      * @param window_size The size of the window for variance calculation
      */
     RollingVariance(size_t window_size)
-        : _window_size(window_size), _i(0), _mean(static_cast<T>(0.0)), _var_sum(static_cast<T>(0.0)) {
+        : _mean(static_cast<T>(0.0)), _var_sum(static_cast<T>(0.0)), _window_size(window_size), _i(0) {
         _samples.resize(_window_size, static_cast<T>(0.0));
     }
 

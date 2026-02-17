@@ -30,6 +30,10 @@
   "dependencies": {
     "mathjs": "^15.1.1"
   },
+  "overrides": {
+    "glob": "^11.0.0",
+    "inflight": "npm:@aashutoshrathi/safer-inflight@^1.0.1"
+  },
   "files": [
     "dist/**/*"
   ]

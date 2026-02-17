@@ -1,6 +1,6 @@
 // g++ -std=c++17 variancetest.cpp ../RunningStats.cpp
-// BigM1 runningstats/tests main $ g++ -std=c++17 variancetest.cpp ../RunningStats.cpp 
-// BigM1 runningstats/tests main $ ./a.out                                            
+// BigM1 runningstats/tests main $ g++ -std=c++17 variancetest.cpp ../RunningStats.cpp
+// BigM1 runningstats/tests main $ ./a.out
 // Test: Empty Set - Passed (NaN)
 // Test wv: Empty Set - Passed (NaN)
 // Test rwv: Empty Set - Passed (NaN)
@@ -149,9 +149,9 @@ void runTest(const std::vector<double>& data, double expected, const std::string
     //     }
     // }
 
-    RollingVariance ov(WINDOW);
-    for (double x : data) ov.add(x);
-    result = ov.variance();
+    RollingVariance<double> ov(WINDOW);
+    for (double x : data) ov.Push(x);
+    result = ov.Variance();
     std::cout << "Test ov: " << testName << " - ";
     if (data.empty()) {
         if (std::isnan(result) && std::isnan(expected)) {
@@ -188,7 +188,7 @@ void runTest(const std::vector<double>& data, double expected, const std::string
             std::cout << "Failed (Expected: " << expected << ", Got: " << result << ")\n";
         }
     }
-    
+
 }
 
 int main() {
